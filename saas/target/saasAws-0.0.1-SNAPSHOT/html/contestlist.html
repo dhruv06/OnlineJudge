@@ -1,0 +1,110 @@
+<html>
+<head>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+	
+<style>
+	table,
+thead,
+tr,
+tbody,
+th,
+td {
+  text-align: center;
+  vertical-align: middle;
+}
+body {
+	margin: 50px ;
+  background: #DDD;
+  font-size: 16px;
+  color: #222;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 300;
+	}
+#contest_details{ white-space:pre-wrap; }
+</style>
+</head>
+<body>
+
+
+<center>
+<div class="container">
+	<h2>Contests</h2>
+<br>
+<div class="row">
+	<div class="col-12">
+  <table class="table table-striped" id="contests-table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Contest</th>
+        <th>Organizer</th>
+      </tr>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
+ </div> 
+</div>
+</div>
+</center>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>	
+
+<script>
+var $tbody = $('#contests-table').find('tbody');
+
+
+
+var json = {
+		"cname":"temp"
+	};
+
+
+
+const http = new XMLHttpRequest()
+http.open('POST', '/saas/api/getcontestlist')
+http.setRequestHeader('Content-type', 'application/json')
+http.send(JSON.stringify(json)) // Make sure to stringify
+http.onload = function() {
+// Do whatever with response
+
+console.log(http.responseText);
+
+var obj=JSON.parse(http.responseText);
+var i;
+for(i=0;i<50;i++)
+{
+if(obj.titles[i]==null)
+{
+break;
+}
+var contestname=obj.titles[i].split("_")[0];
+var organizer=obj.titles[i].split("_")[2];
+var j=i+1;
+var contestnamehtml='<a href="/saas/contest?cname='+obj.titles[i]+'" >'+contestname+'</a>'
+var row = '<tr>'
+		+ '<td>' + j + '</td>'
+		+ '<td>' + contestnamehtml + '</td>'
+		+ '<td>'  + organizer + '</td>'
+		+ '</tr>';
+
+$tbody.append(row);
+	
+// var link = document.createElement("a");   // Get the first <h1> element in the document
+// var href = document.createAttribute("href");       // Create a "class" attribute
+// href.value ="/saas/contest?cname="+obj.titles[i];                           // Set the value of the class attribute
+// link.setAttributeNode(href);
+// var text1=document.createTextNode(obj.titles[i]);
+// link.appendChild(text1);
+// document.getElementById("contests").appendChild(link);
+// var br = document.createElement("br");
+// document.getElementById("contests").appendChild(br);
+}
+
+}
+</script>
+
+
+</body>
+</html>

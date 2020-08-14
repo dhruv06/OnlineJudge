@@ -1,0 +1,135 @@
+<html>
+<head>
+	<style>
+	@import url(https://fonts.googleapis.com/css?family=Roboto:400,300,500);
+*:focus {
+  outline: none;
+}
+input[type=text] {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+body {
+  margin: 50px ;
+  padding: 0;
+  background: #DDD;
+  font-size: 16px;
+  color: #222;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 300;
+}
+
+		textarea#cdes {
+	width: 500px;
+	height: 120px;
+	border: 3px solid #cccccc;
+	padding: 12px 20px;
+	font-family: Tahoma, sans-serif;
+	background-image: url(bg.gif);
+	background-position: bottom right;
+	background-repeat: no-repeat;
+}
+/*.flex-container {
+  display: flex;
+  flex-direction: row;
+  min-height: 100vh;
+}*/
+td {
+  padding: 15px;
+  text-align: left;
+}
+#contest-box {
+  position: relative;
+  margin: 50px;
+  width: 800px;
+  height: 400px;
+  background: #FFF;
+  border-radius: 2px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+}
+.button {
+  background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  padding: 16px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  margin-top: 50px;
+  transition-duration: 0.4s;
+  cursor: pointer;
+}
+
+.button1 {
+  background-color: white; 
+  color: black; 
+  border: 2px solid #4CAF50;
+}
+
+.button1:hover {
+  background-color: #4CAF50;
+  color: white;
+}
+	</style>
+	</head>
+<body>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>	
+<script>
+function addData()
+{
+	 var json = {
+				"uname":"temp",
+				"cname":document.getElementById("cname").value,
+				"cdesc":document.getElementById("cdes").value
+			};
+
+	
+	
+const http = new XMLHttpRequest()
+http.open('POST', '/saas/api/addcontest1')
+http.setRequestHeader('Content-type', 'application/json')
+http.send(JSON.stringify(json)) // Make sure to stringify
+http.onload = function() {
+    // Do whatever with response
+    
+    localStorage.setItem("cname", document.getElementById("cname").value);
+	window.location.replace("/saas/addquestion");
+
+}
+}
+function setbg(color)
+{
+document.getElementById("cdes").style.background=color
+}
+</script>
+<center>
+	<div id="contest-box" style="overflow: auto;">
+	<table>
+
+<tr>
+	<td>Contest Name</td>
+	<td><input type="text" id="cname"></td>
+</tr>
+<tr>
+<td>Contest Description</td> 
+<td><textarea name="styled-textarea" id="cdes" onfocus="this.value=''; setbg('#e5fff3');" onblur="setbg('white')">Enter contest description here...</textarea></td>
+</tr>
+
+</table>
+
+<button class="button button1" onclick="addData()"> Add Questions</button>
+</div>
+<br>
+
+</center>
+
+</body>
+</html>

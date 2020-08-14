@@ -1,0 +1,6 @@
+--2020-02-21 05:11:47--  https://www.google.com/search?q=svnit+logo
+Resolving www.google.com (www.google.com)... 172.217.1.36, 2607:f8b0:4009:802::2004
+Connecting to www.google.com (www.google.com)|172.217.1.36|:443... connected.
+HTTP request sent, awaiting response... 403 Forbidden
+2020-02-21 05:11:48 ERROR 403: Forbidden.
+

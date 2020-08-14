@@ -1,0 +1,252 @@
+<html>
+<head>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+	<style>
+		@import url(https://fonts.googleapis.com/css?family=Roboto:400,300,500);
+*:focus {
+  outline: none;
+}
+table,
+thead,
+tr,
+tbody,
+th,
+td {
+  text-align: center;
+  vertical-align: middle;
+}
+input[type=text] {
+  width: 100%;
+  padding: 12px 20px;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+body {
+	margin: 50px ;
+  background: #DDD;
+  font-size: 16px;
+  color: #222;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 300;
+	}
+	textarea#qdesc {
+	width: 500px;
+	height: 120px;
+	border: 3px solid #cccccc;
+	padding: 12px 20px;
+	font-family: Tahoma, sans-serif;
+	background-image: url(bg.gif);
+	background-position: bottom right;
+	background-repeat: no-repeat;
+}
+textarea#sinput {
+	width: 200px;
+	height: 100px;
+	border: 3px solid #cccccc;
+	padding: 12px 20px;
+	font-family: Tahoma, sans-serif;
+	background-image: url(bg.gif);
+	background-position: bottom right;
+	background-repeat: no-repeat;
+}
+textarea#soutput {
+	width: 200px;
+	height: 100px;
+	border: 3px solid #cccccc;
+	padding: 12px 20px;
+	font-family: Tahoma, sans-serif;
+	background-image: url(bg.gif);
+	background-position: bottom right;
+	background-repeat: no-repeat;
+}
+	</style>
+	</head>
+<body>
+
+<center>
+	<div class="container">
+	<table>
+
+<tr>
+	<td style="text-align: left">Question Name</td>
+	<td style="text-align: left"><input type="text" id="qname"></td>
+</tr>
+<tr>
+<td style="text-align: left">Question Description</td> 
+<td style="text-align: left"><textarea name="styled-textarea" id="qdesc" onfocus="this.value=''; setbg('#e5fff3');" onblur="setbg('white')">Enter question description here...</textarea></td>
+</tr>
+<tr>
+	<td>
+		
+	</td>
+	<td style="text-align: left">
+		<textarea  id="sinput" placeholder="Enter Sample Input"></textarea>
+		<textarea id="soutput" placeholder="Enter Sample Output"></textarea>
+	</td>
+</tr>
+</table>
+<table>
+
+</table>
+<br>
+	<div class="row">
+	<div class="col-12">
+  <table class="table table-striped" id="testcase-table">
+	<thead>
+	  <tr>
+		<th>ID</th>
+		<th>Input</th>
+		<th>Output</th>
+		<th>Marks</th>
+	  </tr>
+	</thead>
+	<tbody>
+	</tbody>
+  </table>
+ </div> 
+</div>
+
+<br>
+<button type="button" class="btn btn-outline-primary" onclick="addtestcase()">Add Testcase</button>
+<br>
+<br>
+<button type="button" class="btn btn-outline-success" onclick="addquestion(1)">Next Question</button>&nbsp;
+<button type="button" class="btn btn-outline-danger"onclick="addquestion(0)">Finish</button>
+</div>
+</center>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>	
+<script>
+var count=1;
+var $tbody = $('#testcase-table').find('tbody');
+function addtestcase()
+{
+// var t1 = document.createElement("textarea");   // Get the first <h1> element in the document
+// var row = document.createAttribute("rows");       // Create a "class" attribute
+// row.value ="15";                           // Set the value of the class attribute
+// t1.setAttributeNode(row);
+// var col = document.createAttribute("cols");       // Create a "class" attribute
+// col.value ="45";                           // Set the value of the class attribute
+// t1.setAttributeNode(col);
+// var id = document.createAttribute("id");       // Create a "class" attribute
+// id.value ="input"+count;                           // Set the value of the class attribute
+// t1.setAttributeNode(id);
+// var placeholder = document.createAttribute("placeholder");       // Create a "class" attribute
+// placeholder.value ="Enter Input of Testcase number "+count;                           // Set the value of the class attribute
+// t1.setAttributeNode(placeholder);
+
+var tinputhtml='<textarea  id="input'+count+'" placeholder="Enter Testcase Input" style="width: 200px;height: 100px;	border: 3px solid #cccccc;	padding: 12px 20px;	font-family: Tahoma, sans-serif;	background-image: url(bg.gif);	background-position: bottom right;	background-repeat: no-repeat;" required></textarea>';
+var toutputhtml='<textarea  id="output'+count+'" placeholder="Enter Testcase Output" style="width: 200px;height: 100px;	border: 3px solid #cccccc;	padding: 12px 20px;	font-family: Tahoma, sans-serif;	background-image: url(bg.gif);	background-position: bottom right;	background-repeat: no-repeat;" required></textarea>';
+
+// var t2 = document.createElement("textarea");   // Get the first <h1> element in the document
+// var row1 = document.createAttribute("rows");       // Create a "class" attribute
+// row1.value ="15";                           // Set the value of the class attribute
+// t2.setAttributeNode(row1);
+// var col1 = document.createAttribute("cols");       // Create a "class" attribute
+// col1.value ="45";                           // Set the value of the class attribute
+// t2.setAttributeNode(col1);
+// var id1 = document.createAttribute("id");       // Create a "class" attribute
+// id1.value ="output"+count;                           // Set the value of the class attribute
+// t2.setAttributeNode(id1);
+// var placeholder1 = document.createAttribute("placeholder");       // Create a "class" attribute
+// placeholder1.value ="Enter Output of Testcase number "+count;                           // Set the value of the class attribute
+// t2.setAttributeNode(placeholder1);
+
+
+// var t4 = document.createElement("input");   // Get the first <h1> element in the document
+// var type1 = document.createAttribute("type");       // Create a "class" attribute
+// type1.value ="text";                           // Set the value of the class attribute
+// t4.setAttributeNode(type1);
+// var id7 = document.createAttribute("id");       // Create a "class" attribute
+// id7.value ="marks"+count;                           // Set the value of the class attribute
+// t4.setAttributeNode(id7);
+// var placeholder7 = document.createAttribute("placeholder");       // Create a "class" attribute
+// placeholder7.value ="Enter Marks of Testcase number "+count;                           // Set the value of the class attribute
+// t4.setAttributeNode(placeholder7);
+var tmarks='<input type="text" id="marks'+count+'" placeholder="Enter Marks" style="width:50%" required>';
+var row = '<tr>'
+		+ '<td>' + count + '</td>'
+		+ '<td>' + tinputhtml + '</td>'
+		+ '<td>'  + toutputhtml + '</td>'
+		+ '<td>' + tmarks + '</td>'
+		+ '</tr>';
+
+$tbody.append(row);
+	
+
+// var t3 = document.createElement("br");
+
+// document.getElementById("center").appendChild(t1);
+// document.getElementById("center").appendChild(t2);
+// document.getElementById("center").appendChild(t4);
+// document.getElementById("center").appendChild(t3);
+count++;
+
+
+
+}
+
+
+function addquestion(x)
+{
+var i;
+var input=new Array();
+var output=new Array();
+var marks=new Array();
+for(i=1;i<count;i++)
+{
+	input[i-1]=document.getElementById("input"+i).value;
+	output[i-1]=document.getElementById("output"+i).value;
+	marks[i-1]=document.getElementById("marks"+i).value;
+}
+ var json = {
+				"uname":"temp",
+				"cname":localStorage.getItem("cname"),
+				"qname":document.getElementById("qname").value,
+				"qdesc":document.getElementById("qdesc").value,
+				"sinput":document.getElementById("sinput").value,
+				"soutput":document.getElementById("soutput").value,
+				"input":input,
+				"output":output,
+				"marks":marks
+			};
+console.log(JSON.stringify(json));
+	
+	
+const http = new XMLHttpRequest();
+http.open('POST', '/saas/api/addquestion1');
+http.setRequestHeader('Content-type', 'application/json');
+http.send(JSON.stringify(json)); // Make sure to stringify
+http.onload = function() {
+	// Do whatever with response
+	
+	//localStorage.setItem("cname", document.getElementById("cname").value);
+if(x==1)
+	{
+	window.location.replace("/saas/addquestion");
+	
+	}
+else
+	{
+	window.location.replace("/saas")
+	}
+	
+
+}
+}
+
+
+</script>
+</body>
+</html>
+
+ 
+	
+
+
+
+
+
+

@@ -1,0 +1,121 @@
+<html>
+<head>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+	
+<style>
+#contest_details{ white-space:pre-wrap; }
+table,
+thead,
+tr,
+tbody,
+th,
+td {
+  text-align: center;
+  vertical-align: middle;
+}
+body {
+	margin: 50px ;
+  background: #DDD;
+  font-size: 16px;
+  color: #222;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 300;
+	}
+</style>
+</head>
+<body>
+<center>
+<div id="contest_name">
+<h1 id="cname"></h1>
+</div>
+<div class="container">
+<div class="card">
+    <div class="card-body">
+      <h4 class="card-title">Description</h4>
+      <p class="card-text"><div id="contest_details">
+	</div></p>
+    </div>
+  </div>
+<br>
+<h2>Questions</h2>
+
+<div class="row">
+	<div class="col-12">
+  <table class="table table-striped" id="questions-table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Question</th>
+      </tr>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
+ </div> 
+</div>
+</div>
+</center>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>	
+
+<script>
+	var $tbody = $('#questions-table').find('tbody');
+
+
+var url_string = window.location.href; //window.location.href
+var url = new URL(url_string);
+var cname = url.searchParams.get("cname");
+document.getElementById("cname").innerHTML=cname.split("_")[0];
+
+
+var json = {
+		"cname":cname
+	};
+
+
+
+const http = new XMLHttpRequest()
+http.open('POST', '/saas/api/getcontestdetail')
+http.setRequestHeader('Content-type', 'application/json')
+http.send(JSON.stringify(json)) // Make sure to stringify
+http.onload = function() {
+// Do whatever with response
+
+console.log(http.responseText);
+
+var obj=JSON.parse(http.responseText);
+document.getElementById("contest_details").innerHTML=obj.cdesc;
+var i;
+for(i=0;i<50;i++)
+{
+if(obj.titles[i]==null)
+{
+break;
+}
+
+var j=i+1;
+var questionnamehtml='<a href="/saas/question?cname='+cname+'&qname='+ obj.titles[i] +'" >'+obj.titles[i]+'</a>'
+var row = '<tr>'
+		+ '<td>' + j + '</td>'
+		+ '<td>' + questionnamehtml + '</td>'
+		+ '</tr>';
+
+$tbody.append(row);
+// var link = document.createElement("a");   // Get the first <h1> element in the document
+// var href = document.createAttribute("href");       // Create a "class" attribute
+// href.value ="/saas/question?cname="+cname+"&qname="+obj.titles[i];                           // Set the value of the class attribute
+// link.setAttributeNode(href);
+// var text1=document.createTextNode(obj.titles[i]);
+// link.appendChild(text1);
+// document.getElementById("questions").appendChild(link);
+// var br = document.createElement("br");
+// document.getElementById("questions").appendChild(br);
+}
+
+}
+</script>
+
+
+</body>
+</html>

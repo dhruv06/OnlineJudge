@@ -1,0 +1,220 @@
+<html>
+<head>
+ <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+.buttonload {
+  background-color: #4CAF50; /* Green background */
+  border: none; /* Remove borders */
+  color: white; /* White text */
+  padding: 12px 24px; /* Some padding */
+  font-size: 16px; /* Set a font-size */
+}
+
+/* Add a right margin to each icon */
+.fa {
+  margin-left: -12px;
+  margin-right: 8px;
+}
+
+.button {
+  background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  padding: 12px 12px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  -webkit-transition-duration: 0.4s; /* Safari */
+  transition-duration: 0.4s;
+  cursor: pointer;
+}
+
+.button2 {
+  background-color: white; 
+  color: black; 
+  border: 2px solid #4CAF50;
+}
+
+.button2:hover {
+  background-color: #4CAF50;
+  color: white;
+}
+.button1 {
+  background-color: white; 
+  color: black; 
+  border: 2px solid #008CBA;
+}
+
+.button1:hover {
+  background-color: #008CBA;
+  color: white;
+}
+#editor {
+    position: absolute;
+    width: 800px;
+    height: 500px;
+    margin-left:20px
+}
+
+</style>
+<script  src="https://code.angularjs.org/1.7.8/angular.js"></script>
+<script  src="https://code.angularjs.org/1.7.8/angular-route.js"></script>
+<script  src="https://code.angularjs.org/1.7.8/angular-resource.js"></script>
+
+<script src="html/src/ace.js" type="text/javascript" charset="utf-8"></script>
+
+
+</head>
+
+
+
+
+<body>
+
+<div ng-app="myApp" ng-controller="myCtrl">
+
+
+<form ng-submit="submit()">
+
+<div ng-model="area1" id="editor">
+</div>
+
+<br><br >
+<span style="margin-top:550px;margin-left:20px">Include image: <input type="checkbox" id="incld" value="myvalue" ></span>
+<button class="button button1 buttonload" type="submit" id="mybun1" style="margin-top:550px;margin-left:20px">
+ <i class="tempclass" id="mybun" ></i><span id="bname">Compile</span>
+</button>
+</form>
+<div class="container">
+<div class="panel-group">
+
+<div class="panel panel-success">
+<div class="panel-heading">Output</div>
+<div class="panel-body">
+<p id="successlog"></p>
+</div></div></div>
+<img id="opimage"></img>
+<script>
+    var editor = ace.edit("editor");
+	editor.setTheme("ace/theme/tomorrow_night_bright");
+editor.session.setMode("ace/mode/java");
+editor.setFontSize("18px");
+
+
+</script>
+
+
+
+
+
+<div><p id="wrapper"></p></div>
+
+
+</div>
+
+
+<script>
+
+var app = angular.module('myApp', ['ngRoute', 'ngResource'] );
+
+app.controller("myCtrl", function($scope, $http, $location,$route,$window) 
+{
+$scope.submit = function () {
+    var params = {};
+var NAME = document.getElementById("mybun");
+NAME.className="fa fa-refresh fa-spin";
+document.getElementById("bname").innerHTML="Compiling";
+document.getElementById("mybun1").disabled = true;
+
+    
+  var hasimage=document.getElementById("incld").checked;
+  if(document.getElementById("incld").checked==true)
+	  {
+  var json = {
+			"language":"Scilab",
+			"type": 1,
+			"code":editor.getValue()	
+		};
+	  }
+  else if(document.getElementById("incld").checked==false)
+	  {
+	  var json = {
+				"language":"Scilab",
+				"type": 0,
+				"code":editor.getValue()	
+			};
+	  }
+  
+    // Service
+    $http({
+        method: "POST",
+        url: "/saas/api/scilab",
+        
+        headers: { 'Content-Type': 'application/json' },
+        params: params,
+        data: JSON.stringify(json)
+    }).then(function (response) {
+NAME.className="tempclass";
+document.getElementById("bname").innerHTML="Compile";
+document.getElementById("mybun1").disabled = false;
+
+//document.getElementById("errorlog").innerHTML = response.data.errorlog;
+document.getElementById("successlog").innerHTML = response.data.successlog;
+console.log(response);
+	
+	
+	var outputImg = document.getElementById('opimage');
+	
+
+	if(hasimage==true)
+		{
+		outputImg.src =  response.data.url;
+		}
+	else
+		{
+		outputImg.src =  "";
+		}
+    }, function (error) {
+        console.log(error);
+    });
+};
+
+
+
+
+
+
+
+});
+
+app.directive('fileModel', ['$parse', function ($parse) {
+    return {
+        restrict: 'A',
+        link: function(scope, element, attrs) {
+            var model = $parse(attrs.fileModel);
+            var modelSetter = model.assign;
+
+            element.bind('change', function(){
+                scope.$apply(function(){
+                    modelSetter(scope, element[0].files[0]);
+                });
+            });
+
+        }
+    };
+}]);
+
+
+
+</script>
+
+</body>
+</html>

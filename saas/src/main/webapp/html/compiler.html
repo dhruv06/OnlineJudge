@@ -1,0 +1,236 @@
+<html>
+<head>
+ <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+.buttonload {
+  background-color: #4CAF50; /* Green background */
+  border: none; /* Remove borders */
+  color: white; /* White text */
+  padding: 12px 24px; /* Some padding */
+  font-size: 16px; /* Set a font-size */
+}
+
+/* Add a right margin to each icon */
+.fa {
+  margin-left: -12px;
+  margin-right: 8px;
+}
+
+.button {
+  background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  padding: 12px 12px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  -webkit-transition-duration: 0.4s; /* Safari */
+  transition-duration: 0.4s;
+  cursor: pointer;
+}
+
+.button2 {
+  background-color: white; 
+  color: black; 
+  border: 2px solid #4CAF50;
+}
+
+.button2:hover {
+  background-color: #4CAF50;
+  color: white;
+}
+.button1 {
+  background-color: white; 
+  color: black; 
+  border: 2px solid #008CBA;
+}
+
+.button1:hover {
+  background-color: #008CBA;
+  color: white;
+}
+#editor {
+    position: absolute;
+    width: 800px;
+    height: 500px;
+    margin-left:20px
+}
+
+</style>
+<script  src="https://code.angularjs.org/1.7.8/angular.js"></script>
+<script  src="https://code.angularjs.org/1.7.8/angular-route.js"></script>
+<script  src="https://code.angularjs.org/1.7.8/angular-resource.js"></script>
+
+<script src="html/src/ace.js" type="text/javascript" charset="utf-8"></script>
+
+
+</head>
+
+
+
+
+<body>
+
+<div ng-app="myApp" ng-controller="myCtrl">
+
+<select ng-model="mylang" style="width:200px;margin-left:20px;margin-top:5px;padding:5px;background-color:#cce6ff" onchange="editorchange()" id="langu">
+<option value="C">C</option>
+<option value="C++">C++</option>
+<option value="Java">Java</option>
+<option value="Python">Python</option>
+</select>
+
+<form ng-submit="submit()">
+
+<div ng-model="area1" id="editor">
+</div>
+<div class="container" style="float:left;margin-left:830px;width:300px">
+  <div class="panel-group"  >
+    <div class="panel panel-primary">
+      <div class="panel-heading">Enter input here</div>
+      <div class="panel-body">
+    
+<textarea rows="15" cols="27" ng-model="area2" ></textarea>
+</div></div></div></div>
+<br><br >
+<button class="button button1 buttonload" type="submit" id="mybun1" style="margin-top:140px;margin-left:20px">
+ <i class="tempclass" id="mybun" ></i><span id="bname">Compile</span>
+</button>
+</form>
+<div class="container" style="margin-top:340px">
+<div class="panel-group">
+<div class="panel panel-warning">
+<div class="panel-heading">Compilation log</div>
+<div class="panel-body">
+<p id="errorlog"></p>
+<br>
+</div>
+</div>
+<div class="panel panel-success">
+<div class="panel-heading">Output</div>
+<div class="panel-body">
+<p id="successlog"></p>
+</div></div></div>
+<script>
+    var editor = ace.edit("editor");
+	editor.setTheme("ace/theme/tomorrow_night_bright");
+editor.session.setMode("ace/mode/c_cpp");
+editor.setFontSize("18px");
+
+function editorchange()
+{
+	var mymode=document.getElementById("langu").value;
+	if(mymode=="C++" || mymode=="C")
+{
+	editor.session.setMode("ace/mode/c_cpp");
+}
+else if(mymode=="Java" || mymode=="Scilab")
+{
+editor.session.setMode("ace/mode/java");
+}
+
+}
+</script>
+
+
+
+
+
+<div><p id="wrapper"></p></div>
+
+
+</div>
+
+</div>
+<script>
+
+var app = angular.module('myApp', ['ngRoute', 'ngResource'] );
+
+app.controller("myCtrl", function($scope, $http, $location,$route,$window) 
+{
+$scope.mylang="C";
+$scope.submit = function () {
+    var params = {};
+var NAME = document.getElementById("mybun");
+NAME.className="fa fa-refresh fa-spin";
+document.getElementById("bname").innerHTML="Compiling";
+document.getElementById("mybun1").disabled = true;
+
+    //var formData = new $window.FormData();
+   // formData.append("file01", $scope.image01);
+  //formData.append("file02", $scope.image02);
+//formData.append("lang",$scope.mylang);
+  //formData.append("type", "0");
+  //formData.append("area1",editor.getValue());
+  //formData.append("area2", $scope.area2);
+  
+  var json = {
+		  "uname":"temp",
+			"language":$scope.mylang,
+			"type":0,
+			"code":editor.getValue(),
+			"input":$scope.area2	
+		};
+  
+    // Service
+    $http({
+        method: "POST",
+        url: "/saas/api/upload",
+        
+        headers: { 'Content-Type': 'application/json' },
+        params: params,
+        data: JSON.stringify(json)
+    }).then(function (response) {
+NAME.className="tempclass";
+document.getElementById("bname").innerHTML="Compile";
+document.getElementById("mybun1").disabled = false;
+
+	console.log(response);
+        $scope.resp=response.data;
+document.getElementById("errorlog").innerHTML = response.data.errorlog;
+document.getElementById("successlog").innerHTML = response.data.successlog;
+
+    }, function (error) {
+        console.log(error);
+    });
+};
+
+
+
+
+
+
+
+});
+
+app.directive('fileModel', ['$parse', function ($parse) {
+    return {
+        restrict: 'A',
+        link: function(scope, element, attrs) {
+            var model = $parse(attrs.fileModel);
+            var modelSetter = model.assign;
+
+            element.bind('change', function(){
+                scope.$apply(function(){
+                    modelSetter(scope, element[0].files[0]);
+                });
+            });
+
+        }
+    };
+}]);
+
+
+
+</script>
+
+</body>
+</html>
