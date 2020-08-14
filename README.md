@@ -12,6 +12,9 @@ the code to server. Here shared memory access is provided between docker and ser
 Code is compiled using shell script and response is send back to client-side. Response
 can be output or error.
 
+->Simulation and Results :-
+ To view simulation screenshot visit README.pdf file on this repository.
+
 -> Technology road-map for an application
 
 • Technology for cloud platform setup
