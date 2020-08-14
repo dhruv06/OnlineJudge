@@ -18,9 +18,7 @@ can be output or error.
 
 Different services of Amazon web services(AWS) is used for implementing IaaS
 like Elastic Compute Cloud (EC2)(for creating virtual machine),Amazon Simple
-Storage Service (S3) (for simple storage service),Identity and Access Management
-(IAM)(for identity management),Relational Database System (RDS)(for simple
-database service).
+Storage Service (S3) (for simple storage service)
 
 • Technology for integrating software
 Docker is used to provide container service for running different language code in
