@@ -13,7 +13,7 @@ Code is compiled using shell script and response is send back to client-side. Re
 can be output or error.
 
 ->Simulation and Results :-
- To view simulation screenshot visit README.pdf file on this repository.
+https://drive.google.com/file/d/1i-YDERZqEMl2onS6yfs1Y8IpxSB_bU8U/view?usp=sharing
 
 -> Technology road-map for an application
 
