@@ -1,7 +1,7 @@
 # OnlineJudge
 
-<object data="https://drive.google.com/file/d/1i-YDERZqEMl2onS6yfs1Y8IpxSB_bU8U/view?usp=sharing" type="application/pdf" width="700px" height="700px">
-</object>
+[Contribution guidelines for this project](saas/README-01.jpg)
+
 
 ->Simulation and Results :-
 https://drive.google.com/file/d/1i-YDERZqEMl2onS6yfs1Y8IpxSB_bU8U/view?usp=sharing
