@@ -1,9 +1,6 @@
 # OnlineJudge
 
 <object data="https://drive.google.com/file/d/1i-YDERZqEMl2onS6yfs1Y8IpxSB_bU8U/view?usp=sharing" type="application/pdf" width="700px" height="700px">
-    <embed src="https://drive.google.com/file/d/1i-YDERZqEMl2onS6yfs1Y8IpxSB_bU8U/view?usp=sharing">
-        
-    </embed>
 </object>
 
 ->Simulation and Results :-
