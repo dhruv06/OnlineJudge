@@ -1,6 +1,6 @@
 # OnlineJudge
 
-  <img src="saas/README-01.jpg" width="350" title="hover text">
+  <img src="saas/README-01.jpg">
 
 
 ->Simulation and Results :-
